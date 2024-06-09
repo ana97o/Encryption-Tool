@@ -35,7 +35,7 @@ jobs:
       - name: Compress published files
         run: |
           cd EncryptionTool
-          zip -r ../my-app.zip *
+          tar -czvf ../my-app.zip *
 
       - name: Install AWS CLI
         run: |
