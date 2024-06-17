@@ -31,18 +31,13 @@ jobs:
 
       - name: Publish Application
         run: |
-          msbuild EncryptionTool.sln /t:Publish /p:Configuration=Release /p:PublishDir=./EncryptionTool/publish
+          msbuild EncryptionTool/EncryptionTool.csproj /t:Publish /p:Configuration=Release /p:PublishDir=./publish  /p:DeployOnBuild=true /p:PublishProfile=publish_profile.pubxml
 
       - name: Compress published files
         run: |
-          cd EncryptionTool
+          cd publish
           pwd
-          ls -alh
-          Compress-Archive -Path * -DestinationPath encryptiontool.zip
-
-      - name: Compress Elasticbeanstalk files
-        run: |
-          ls -alh
+          ls
           Compress-Archive -Path * -DestinationPath my-app.zip
 
       - name: Install AWS CLI
