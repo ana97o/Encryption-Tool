@@ -18,6 +18,7 @@ jobs:
 
       - name: Install .NET Framework 4.5 Build Tools
         run: |
+          dotnet -h
           choco install visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktopBuildTools --includeRecommended --includeOptional --quiet --norestart"
           choco install visualstudio2017-workload-netweb --package-parameters "--includeRecommended --includeOptional --quiet --norestart"
 
@@ -31,7 +32,6 @@ jobs:
 
       - name: Publish Application
         run: |
-          dotnet -v
           dotnet publish -o site
       - name: Compress published files
         run: |
