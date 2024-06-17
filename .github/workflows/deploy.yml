@@ -53,5 +53,5 @@ jobs:
       - name: Deploy to AWS Elastic Beanstalk
         run: |
           aws s3 cp EncryptionTool/my-app.zip s3://elasticbeanstalk-eu-north-1-471112929606/my-app.zip
-          aws elasticbeanstalk create-application-version --application-name abc --version-label ${{ github.sha }} --source-bundle S3Bucket=elasticbeanstalk-eu-north-1-471112929606,S3Key=my-app.zip
-          aws elasticbeanstalk update-environment --application-name abc --environment-name Abc-env --version-label ${{ github.sha }}
+          aws elasticbeanstalk create-application-version --application-name EncryptionTool --version-label ${{ github.sha }} --source-bundle S3Bucket=elasticbeanstalk-eu-north-1-471112929606,S3Key=my-app.zip
+          aws elasticbeanstalk update-environment --application-name EncryptionTool --environment-name encryptiontool --version-label ${{ github.sha }}
