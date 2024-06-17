@@ -36,8 +36,7 @@ jobs:
       - name: Compress published files
         run: |
           cd EncryptionTool
-          zip -v
-          zip my-app.zip *
+          Compress-Archive -Path ./publish/* -DestinationPath my-app.zip
 
       - name: Install AWS CLI
         run: |
