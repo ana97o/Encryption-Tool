@@ -32,13 +32,19 @@ jobs:
 
       - name: Publish Application
         run: |
-          dotnet publish -o site
+          dotnet publish --configuration Release --output ./EncryptionTool --no-build -o ../site
+
       - name: Compress published files
         run: |
           cd site
           pwd
           ls
-          Compress-Archive -Path * -DestinationPath my-app.zip
+          Compress-Archive -Path * -DestinationPath encryptiontool.zip
+
+      - name: Compress ELB files
+        run: |
+          ls
+          Compress-Archive -Path encryptiontool.zip aws-windows-deployment-manifest.json -DestinationPath my-app.zip
 
       - name: Install AWS CLI
         run: |
