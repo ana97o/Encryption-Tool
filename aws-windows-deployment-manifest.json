@@ -5,7 +5,7 @@
       {
         "name": "encryptiontool",
         "parameters": {
-          "archive": "my-app.zip",
+          "archive": "encryptiontool.zip",
           "iisPath": "/"
         }
       }

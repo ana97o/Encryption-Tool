@@ -36,6 +36,10 @@ jobs:
       - name: Compress published files
         run: |
           cd EncryptionTool
+          Compress-Archive -Path * -DestinationPath encryptiontool.zip
+
+      - name: Compress Elasticbeanstalk files
+        run: |
           Compress-Archive -Path * -DestinationPath my-app.zip
 
       - name: Install AWS CLI
