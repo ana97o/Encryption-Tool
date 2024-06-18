@@ -37,10 +37,10 @@ jobs:
       - name: Compress published files
         run: |
           ls
-          cd EncryptionTool\obj\Release\Package\EncryptionTool.zip
+          cd EncryptionTool\obj\Release\Package
           pwd
           ls
-          Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
+          # Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
 
 
 
@@ -48,7 +48,7 @@ jobs:
         run: |
           ls
           # zip my-app.zip encryptiontool.zip aws-windows-deployment-manifest.json
-          Compress-Archive -Path "encryptiontool.zip" -DestinationPath "my-app.zip"
+          Compress-Archive -Path "EncryptionTool\obj\Release\Package\EncryptionTool.zip" -DestinationPath "my-app.zip"
 
       - name: Install AWS CLI
         run: |
