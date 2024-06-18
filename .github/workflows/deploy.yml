@@ -32,11 +32,11 @@ jobs:
 
       - name: Publish Application
         run: |
-          msbuild EncryptionTool/EncryptionTool.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:PublishUrl=.\publish
+          msbuild EncryptionTool/EncryptionTool.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:PublishUrl=publish
       - name: Compress published files
         run: |
           ls
-          cd publish
+          cd EncryptionTool/publish
           pwd
           ls
           Compress-Archive -Path * -DestinationPath encryptiontool.zip
