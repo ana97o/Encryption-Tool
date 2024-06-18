@@ -39,12 +39,12 @@ jobs:
           cd EncryptionTool/publish
           pwd
           ls
-          Compress-Archive -Path * -DestinationPath encryptiontool.zip
+          Compress-Archive -Path * -DestinationPath ../encryptiontool.zip
 
       - name: Compress ELB files
         run: |
           ls
-          Compress-Archive -Path encryptiontool.zip aws-windows-deployment-manifest.json -DestinationPath my-app.zip
+          Compress-Archive -Path EncryptionTool/encryptiontool.zip aws-windows-deployment-manifest.json -DestinationPath my-app.zip
 
       - name: Install AWS CLI
         run: |
