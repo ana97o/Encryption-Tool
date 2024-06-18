@@ -6,7 +6,8 @@
         "name": "encryptiontool",
         "parameters": {
           "archive": "encryptiontool.zip",
-          "iisPath": "/"
+          "iisPath": "/",
+          "iisWebSite": "Default Web Site"
         }
       }
     ]
