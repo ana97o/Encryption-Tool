@@ -5,7 +5,7 @@
       {
         "name": "encryptiontool",
         "parameters": {
-          "archive": "encryptiontool.zip",
+          "appBundle": "encryptiontool.zip",
           "iisPath": "/",
           "iisWebSite": "Default Web Site"
         }

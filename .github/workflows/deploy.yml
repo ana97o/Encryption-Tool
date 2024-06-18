@@ -13,6 +13,18 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: Download zip utility
+        run: |
+          Invoke-WebRequest -Uri "https://downloads.sourceforge.net/project/infozip/win32/Zip%203.x%20%28latest%29/zip300xn.zip" -OutFile "$env:TEMP\zip.zip"
+          Expand-Archive -Path "$env:TEMP\zip.zip" -DestinationPath "$env:TEMP\zip"
+          
+      - name: Add zip to PATH
+        run: |
+          $zipPath = (Get-ChildItem "$env:TEMP\zip\zip*.exe")[0].FullName
+          Write-Output "Found zip at: $zipPath"
+          Write-Output "::add-path::$zipPath"
+          Write-Output "$env:path"
+
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v1.0.2
 
@@ -33,18 +45,22 @@ jobs:
       - name: Publish Application
         run: |
           msbuild EncryptionTool/EncryptionTool.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:PublishUrl=publish
+
       - name: Compress published files
         run: |
           ls
           cd EncryptionTool/publish
           pwd
           ls
-          Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
+          # Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
+          zip ../../encryptiontool.zip *
+
 
       - name: Compress ELB files
         run: |
           ls
-          Compress-Archive -Path "encryptiontool.zip", "aws-windows-deployment-manifest.json" -DestinationPath "my-app.zip"
+          zip my-app.zip encryptiontool.zip aws-windows-deployment-manifest.json
+          # Compress-Archive -Path "encryptiontool.zip", "aws-windows-deployment-manifest.json" -DestinationPath "my-app.zip"
 
       - name: Install AWS CLI
         run: |
