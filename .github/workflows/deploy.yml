@@ -44,7 +44,7 @@ jobs:
       - name: Compress ELB files
         run: |
           ls
-          Compress-Archive -Path EncryptionTool/encryptiontool.zip aws-windows-deployment-manifest.json -DestinationPath my-app.zip
+          Compress-Archive -Path "EncryptionTool/encryptiontool.zip", "aws-windows-deployment-manifest.json" -DestinationPath "my-app.zip"
 
       - name: Install AWS CLI
         run: |
