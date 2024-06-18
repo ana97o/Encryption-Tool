@@ -13,17 +13,19 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Download zip utility
+      - name: Download and extract UnxUtils
         run: |
-          Invoke-WebRequest -Uri "https://downloads.sourceforge.net/project/infozip/win32/Zip%203.x%20%28latest%29/zip300xn.zip" -OutFile "$env:TEMP\zip.zip"
-          Expand-Archive -Path "$env:TEMP\zip.zip" -DestinationPath "$env:TEMP\zip"
-          
-      - name: Add zip to PATH
+          Invoke-WebRequest -Uri "https://sourceforge.net/projects/unxutils/files/unxutils/current/UnxUtils.zip/download" -OutFile "$env:TEMP\UnxUtils.zip"
+          Expand-Archive -Path "$env:TEMP\UnxUtils.zip" -DestinationPath "$env:TEMP\UnxUtils"
+
+      - name: Add UnxUtils to PATH
         run: |
-          $zipPath = (Get-ChildItem "$env:TEMP\zip\zip*.exe")[0].FullName
-          Write-Output "Found zip at: $zipPath"
-          Write-Output "::add-path::$zipPath"
-          Write-Output "$env:path"
+          $unxUtilsPath = "$env:TEMP\UnxUtils\usr\local\wbin"
+          Write-Output "Found UnxUtils at: $unxUtilsPath"
+          Write-Output "::add-path::$unxUtilsPath"
+
+      - name: Verify zip installation
+        run: zip --version
 
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v1.0.2
