@@ -40,15 +40,6 @@ jobs:
           cd EncryptionTool\obj\Release\Package
           pwd
           ls
-          # Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
-
-
-
-      - name: Compress ELB files
-        run: |
-          ls
-          # zip my-app.zip encryptiontool.zip aws-windows-deployment-manifest.json
-          Compress-Archive -Path "EncryptionTool\obj\Release\Package\EncryptionTool.zip" -DestinationPath "my-app.zip"
 
       - name: Install AWS CLI
         run: |
@@ -64,6 +55,6 @@ jobs:
 
       - name: Deploy to AWS Elastic Beanstalk
         run: |
-          aws s3 cp EncryptionTool/my-app.zip s3://elasticbeanstalk-eu-north-1-471112929606/my-app.zip
+          aws s3 cp EncryptionTool/obj/Release/Package/EncryptionTool.zip s3://elasticbeanstalk-eu-north-1-471112929606/my-app.zip
           aws elasticbeanstalk create-application-version --application-name EncryptionTool --version-label ${{ github.sha }} --source-bundle S3Bucket=elasticbeanstalk-eu-north-1-471112929606,S3Key=my-app.zip
           aws elasticbeanstalk update-environment --application-name EncryptionTool --environment-name encryptiontool --version-label ${{ github.sha }}
