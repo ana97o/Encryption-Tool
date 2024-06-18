@@ -13,20 +13,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Download and extract UnxUtils
-        run: |
-          Invoke-WebRequest -Uri "https://sourceforge.net/projects/unxutils/files/unxutils/current/UnxUtils.zip/download" -OutFile "$env:TEMP\UnxUtils.zip"
-          Expand-Archive -Path "$env:TEMP\UnxUtils.zip" -DestinationPath "$env:TEMP\UnxUtils"
-
-      - name: Add UnxUtils to PATH
-        run: |
-          $unxUtilsPath = "$env:TEMP\UnxUtils\usr\local\wbin"
-          Write-Output "Found UnxUtils at: $unxUtilsPath"
-          Write-Output "::add-path::$unxUtilsPath"
-
-      - name: Verify zip installation
-        run: zip --version
-
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v1.0.2
 
@@ -46,23 +32,23 @@ jobs:
 
       - name: Publish Application
         run: |
-          msbuild EncryptionTool/EncryptionTool.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:PublishUrl=publish
+          msbuild EncryptionTool/EncryptionTool.csproj /t:Package /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:PublishUrl=publish
 
       - name: Compress published files
         run: |
           ls
-          cd EncryptionTool/publish
+          cd EncryptionTool\obj\Release\Package\EncryptionTool.zip
           pwd
           ls
-          # Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
-          zip ../../encryptiontool.zip *
+          Compress-Archive -Path * -DestinationPath ../../encryptiontool.zip
+
 
 
       - name: Compress ELB files
         run: |
           ls
-          zip my-app.zip encryptiontool.zip aws-windows-deployment-manifest.json
-          # Compress-Archive -Path "encryptiontool.zip", "aws-windows-deployment-manifest.json" -DestinationPath "my-app.zip"
+          # zip my-app.zip encryptiontool.zip aws-windows-deployment-manifest.json
+          Compress-Archive -Path "encryptiontool.zip" -DestinationPath "my-app.zip"
 
       - name: Install AWS CLI
         run: |
