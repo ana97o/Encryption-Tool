@@ -32,7 +32,7 @@ jobs:
 
       - name: Publish Application
         run: |
-          msbuild EncryptionTool/EncryptionTool.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:PublishUrl=.\site
+          msbuild EncryptionTool/EncryptionTool.csproj /p:Configuration=Release /p:PublishUrl=.\site
       - name: Compress published files
         run: |
           cd site
